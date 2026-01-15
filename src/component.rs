@@ -1,10 +1,10 @@
 use bevy::prelude::*;
 
 #[derive(Component, Debug)]
-pub struct Velocity(pub f32);
+pub struct Velocity(pub Vec2);
 
 #[derive(Component, Debug)]
-pub struct Acceleration(pub f32);
+pub struct Acceleration(pub Vec2);
 
 #[derive(Component, Debug)]
 pub struct Health {
@@ -22,6 +22,12 @@ pub struct Name(pub String);
 
 #[derive(Component, Debug)]
 pub struct Shooter;
+
+#[derive(Component, Debug)]
+pub struct Player;
+
+#[derive(Component, Debug)]
+pub struct Enemy;
 
 #[derive(Component, Debug)]
 pub struct Bullet;
