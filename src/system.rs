@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::component::{Acceleration, Velocity, Player};
+use crate::component::*;
 
 pub fn acceleration_system(
     time: Res<Time>,
@@ -55,5 +55,22 @@ pub fn player_key_input_system(
             // キーを離したら即ゼロ
             velocity.0 = Vec2::ZERO;
         }
+    }
+}
+
+pub fn confine_player_system(
+    windows: Query<&Window>,
+    mut query: Query<(&Collider, &mut Transform), With<Player>>,
+) {
+    let window = windows.single().expect("One Window should exist.");
+
+    let half_w = window.width() * 0.5;
+    let half_h = window.height() * 0.5;
+
+    for (collider, mut tf) in &mut query {
+        let r = collider.radius;
+
+        tf.translation.x = tf.translation.x.clamp(-half_w + r, half_w - r);
+        tf.translation.y = tf.translation.y.clamp(-half_h + r, half_h - r);
     }
 }

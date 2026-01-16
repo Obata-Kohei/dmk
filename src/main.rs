@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{component::{Acceleration, Player, Velocity}, system::{acceleration_system, movement_system, player_key_input_system}};
+use crate::{component::{Acceleration, Collider, Player, Velocity}, system::{acceleration_system, movement_system, player_key_input_system, confine_player_system}};
 mod component;
 mod system;
 
@@ -8,7 +8,7 @@ fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_systems(Startup, setup)
-        .add_systems(Update, (player_key_input_system, acceleration_system, movement_system).chain())
+        .add_systems(Update, (player_key_input_system, acceleration_system, movement_system, confine_player_system).chain())
         .run();
 }
 
@@ -24,5 +24,6 @@ fn setup(
         Transform::default(),
         Velocity(Vec2::ZERO),
         Acceleration(Vec2::ZERO),
+        Collider {radius: 32.0},
     ));
 }
